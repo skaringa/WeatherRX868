@@ -1,0 +1,4 @@
+*~
+*.o
+raspi-wiringPi/rxdec
+test/TestDecoder
