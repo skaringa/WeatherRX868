@@ -20,12 +20,9 @@ The source code of the decoder is the same as for the Arduino. However the part 
     17   3V3 ____________ +UB
                        |_ EN  
 
-## Setup
+## Software
 
-* Install [WiringPi library][WiringPi]
-* Connect [RX868 receiver][RX868] to the GPIO
-
-
+    sudo apt install git build-essential wiringpi
     git clone https://github.com/skaringa/WeatherRX868.git
     cd raspi-WiringPi
     make

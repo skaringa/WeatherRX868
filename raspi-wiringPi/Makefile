@@ -1,22 +1,16 @@
-CC=g++
-
-.cpp.o:
-	$(CC) -c $< -o $@
-
-.c.o:
-	$(CC) -c $< -o $@
+CC = g++
+CFLAGS = -I ..
 
 all: rxdec
 
 Decoder.o: ../Decoder.cpp ../Decoder.h
+	$(CC) $(CFLAGS) -c $< -o $@
 
 rxdec.o: rxdec.cpp ../Decoder.h
+	$(CC) $(CFLAGS) -c $< -o $@
 
 rxdec: rxdec.o Decoder.o
-	$(CC) -o $@ $@.o Decoder.o -lwiringPi
+	$(CC) $(CFLAGS) -o $@ $^ -lwiringPi
 
 clean:
 	rm -f *.o core *~ 
-
-mrproper: clean
-	rm -f rxdec

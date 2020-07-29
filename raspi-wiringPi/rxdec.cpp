@@ -57,48 +57,8 @@ PI_THREAD (decoderThread) {
   }
 }
 
-/*
- * MAIN
- *
- * Initialize the hardware and print the output of the Decoder.
- */
-int main() {
-  wiringPiSetup();
-/*
-  BCM GPIO 27: DATA (IN) == WiPin 2
-  BCM GPIO 22: EN (OUT)  == WiPin 3
-*/
-  pinMode(3, OUTPUT);
-  digitalWrite(3, 1); // enable rx
-  pinMode(2, INPUT);
-  pullUpDnControl(2, PUD_DOWN);
-
-  signal(SIGINT, sigIntHandler);
-
-  piThreadCreate(decoderThread);
-
-  while (keepRunning) {
-    piLock(1);
-    if (hasOut) { 
-      hasOut = 0;
-      piUnlock(1);
-      printDecoderOutput(out);
-    }
-    piUnlock(1);
-    delay(100);
-  }
-
-  printf("clean up and exit\n");
-  digitalWrite(3, 0); // disable rx
-}
 
 void printDecoderOutput(DecoderOutput val) {
-  // print current time
-  time_t t = time(0);
-  struct tm *tmp = localtime(&t);
-  if (strftime(dateTimeBuf, sizeof(dateTimeBuf), "%x %X", tmp)) {
-    printf("time: %s\n", dateTimeBuf);
-  }
   // print sensor values depending on type of sensor
   printf("sensor type: %s\n", val.sensorTypeStr);
   printf("address: %d\n", val.address);
@@ -123,3 +83,34 @@ void printDecoderOutput(DecoderOutput val) {
   printf("\n");
 }
 
+/*
+ * MAIN
+ *
+ * Initialize the hardware and print the output of the Decoder.
+ */
+int main() {
+  wiringPiSetup();
+/*
+  BCM GPIO 27: DATA (IN) == WiPin 2
+*/
+  pinMode(2, INPUT);
+  pullUpDnControl(2, PUD_DOWN);
+
+  signal(SIGINT, sigIntHandler);
+
+  piThreadCreate(decoderThread);
+
+  while (keepRunning) {
+    piLock(1);
+    if (hasOut) { 
+      hasOut = 0;
+      piUnlock(1);
+      printDecoderOutput(out);
+    }
+    piUnlock(1);
+    delay(100);
+  }
+
+  printf("clean up and exit\n");
+  digitalWrite(3, 0); // disable rx
+}
