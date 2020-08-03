@@ -17,17 +17,17 @@ static volatile int hasOut = 0;
  */
 void sigIntHandler(int dummy) {
   keepRunning = 0;
-} 
+}
 
 /*
- * Thread to read the output of the receiver module 
+ * Thread to read the output of the receiver module
  * and to decode it using Decoder.
  */
 PI_THREAD (decoderThread) {
   piHiPri(50);
 
   // init decoder for a sample rate of 1/200µs
-  Decoder decoder(4,10);
+  Decoder decoder(5,14);
   int x;
   int len = 0;
   int lo = 0;
@@ -102,7 +102,7 @@ int main() {
 
   while (keepRunning) {
     piLock(1);
-    if (hasOut) { 
+    if (hasOut) {
       hasOut = 0;
       piUnlock(1);
       printDecoderOutput(out);

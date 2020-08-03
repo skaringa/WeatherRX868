@@ -2,7 +2,7 @@
 
 Adaption of the WeatherRX868 Arduino library for the RaspberryPi.
 
-The software controls the ELV RX868 rf 868.35 MHz receiver module to read and decode data of wireless weather sensores.
+The software controls the ELV RX868 rf 868.35 MHz receiver module to read and decode data of wireless weather sensors.
 
 The source code of the decoder is the same as for the Arduino. However the part to control the hardware differs. It is based on the [WiringPi library][WiringPi] and uses a fixed sampling rate instead of the interrupt driven approach of the Arduino.
 
@@ -22,11 +22,14 @@ The source code of the decoder is the same as for the Arduino. However the part 
 
 ## Software
 
+The following steps should be done as a user with belongs to the **gpio** group,
+e.g. as user **pi**:
+
     sudo apt install git build-essential wiringpi
     git clone https://github.com/skaringa/WeatherRX868.git
     cd raspi-WiringPi
     make
-    sudo ./rxdec
+    ./rxdec
 
 ## License
 

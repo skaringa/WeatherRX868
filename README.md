@@ -2,7 +2,7 @@
 
 Arduino library to receive and decode data of wireless weather sensors manufactured by [ELV], like the S 300, ASH 2200, and KS 300. The communication protocol is also compatible to self-made sensors based on the [TempHygroTX868 arduino library][TempHygroTX868].
 
-The software uses the ELV RX868 rf 868.35 MHz receiver module to receive the data of the sensors, decodes it and prints it in human readable or LogView format compatible to the USB-WDE1.
+The software uses the ELV RX868 868.35 MHz receiver module to receive the data of the sensors, decodes it and prints it in human readable or LogView format compatible to the USB-WDE1.
 
 As a bonus, the decoder runs on the Raspberry Pi as well. See sub-directory ```raspi-wiringPi```.
 
@@ -45,7 +45,8 @@ Source: [dc3yc]
 
 Data      | Meaning
 --------- | -------------
-00000001  | synchronisation (up to 10 bits)
+0000000   | synchronisation (up to 10 bits)
+1         | start bit
 10001     | sensor type: 1
 AAA       | address (0..7)
 S1        | sign of temperature, S==0 => positive
@@ -55,7 +56,7 @@ TTTT1     | temperature digit with weight 10
 HHHH1     | humidity digit with weight 0.1
 HHHH1     | humidity digit with weight 1
 HHHH1     | humidity digit with weight 10
-QQQQ1     | check: XOR of data from sensor type to check must be 0
+QQQQ1     | check: XOR of data from sensor type to check - must be 0
 SSSS1     | sum of data from sensor type to check + 5 AND 0xF
 
 #### Example
@@ -68,7 +69,8 @@ Thermo/Hygro Sensor (type 1), address 6, temperature 20.8 °C, rel. humidity 59.
 
 Data      | Meaning
 --------- | -------------
-00000001  | synchronisation (up to 10 bits)
+0000000   | synchronisation (up to 10 bits)
+1         | start bit
 11101     | sensor type: 7
 1R0       | rain detector R==1 => it is raining
 S1        | sign of temperature, S==0 => positive
@@ -95,7 +97,7 @@ Kombi Sensor (type 7), temperature 18.7 °C, rel. humidity 68 %, wind speed 0.0 
 
 ## Description of the output data
 
-The sample sketch WeatherRX868 contains two differnt functions to send the decoded date to
+The sample sketch WeatherRX868 contains two different functions to send the decoded date to
 the serial port. You may use the one that fits your needs or code another one.
 
 __printDecoderOutput__: Prints data in human readable format that should be self-explaining.
@@ -127,7 +129,7 @@ dd.d;      | humidity sensor address 7
 dd.d;      | temperature Kombisensor
 dd.d;      | humidity Kombisensor
 dd.d;      | wind speed
-ddd;       | amount of rain rainfall
+ddd;       | amount of rainfall
 d;         | rain detector
 0\r\n      | end of record
 
