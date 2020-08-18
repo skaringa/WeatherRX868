@@ -1,12 +1,14 @@
 # WeatherRX868
 
-![Arduino Nano with RX868](https://www.kompf.de/tech/images/nano-rx868.jpg)
+![runtest](https://github.com/skaringa/WeatherRX868/workflows/runtest/badge.svg)
 
 Arduino library to receive and decode data of wireless weather sensors manufactured by [ELV], like the S 300, ASH 2200, and KS 300. The communication protocol is also compatible to self-made sensors based on the [TempHygroTX868 arduino library][TempHygroTX868].
 
 The software uses the ELV RX868 868.35 MHz receiver module to receive the data of the sensors, decodes it and prints it in human readable or LogView format compatible to the USB-WDE1.
 
 As a bonus, the decoder runs on the Raspberry Pi as well. See sub-directory ```raspi-wiringPi```.
+
+![Arduino Nano with RX868](https://www.kompf.de/tech/images/nano-rx868.jpg)
 
 ## Hardware
 
